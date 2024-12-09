@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "Divar application"
 include(":app")
 include(":core")
+include(":onboarding")
+include(":onboarding:onboarding_presentation")
