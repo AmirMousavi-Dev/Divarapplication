@@ -14,6 +14,9 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.converter.gson)
 
+    implementation(libs.androidx.paging.runtime.ktx)
+
+
     implementation(project(":core"))
     implementation(project(":post:post_domain"))
 
