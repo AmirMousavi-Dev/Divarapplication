@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Divar application"
 include(":app")
- 
+include(":core")
