@@ -61,7 +61,7 @@ fun WelcomeScreen(
         Spacer(Modifier.height(spacing.spaceLarge))
 
         PrimaryButton(
-            text = stringResource(R.string.welcome_screen_image),
+            text = stringResource(R.string.next),
             modifier = Modifier.fillMaxWidth(),
             onClick = onNextClick
         )
