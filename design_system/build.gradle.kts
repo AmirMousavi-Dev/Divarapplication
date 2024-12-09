@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.amirmousavi.onboarding_presentation"
+    namespace = "com.amirmousavi.design_system"
     compileSdk = libs.versions.projectCompileSdkVersion.get().toInt()
 
     defaultConfig {
@@ -54,6 +54,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    implementation(project(":design_system"))
 }
