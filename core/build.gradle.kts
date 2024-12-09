@@ -15,4 +15,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.compiler)
 
+    implementation (libs.gson)
+    implementation (libs.squareup.retrofit)
+    implementation (libs.squareup.converter.gson)
+
 }
