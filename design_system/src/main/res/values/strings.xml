@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Divar application</string>
+    <string name="welcome_screen_image">تصویر ماشین</string>
+    <string name="explore_cities_screen_image">تصویر شهر</string>
+    <string name="next">بعدی</string>
+    <string name="welcome_title">به دیوار خوش آمدید!</string>
+    <string name="welcome_message">جایی که خرید و فروش وسایل آسان، سریع و مطمئن است.\n\uD83C\uDF89 در اینجا می\u200Cتوانید وسایل مورد نیازتان را پیدا کنید یا کالاهای خود را به راحتی به فروش برسانید.</string>
+    <string name="explore_city_title">آگهی‌ها در همه شهرها!</string>
+    <string name="explore_city_message">با دیوار، دسترسی به آگهی\u200Cها در سراسر کشور آسان\u200Cتر از همیشه است.</string>
+    <string name="select_city">انتخاب شهر</string>
+
+</resources>
