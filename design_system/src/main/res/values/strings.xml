@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Divar application</string>
     <string name="welcome_screen_image">تصویر ماشین</string>
+    <string name="next">بعدی</string>
+    <string name="welcome_title">به دیوار خوش آمدید!</string>
+    <string name="welcome_message">جایی که خرید و فروش وسایل آسان، سریع و مطمئن است.\n\uD83C\uDF89 در اینجا می\u200Cتوانید وسایل مورد نیازتان را پیدا کنید یا کالاهای خود را به راحتی به فروش برسانید.</string>
 
 </resources>
