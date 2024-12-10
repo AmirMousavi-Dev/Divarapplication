@@ -9,5 +9,10 @@
     <string name="explore_city_message">با دیوار، دسترسی به آگهی\u200Cها در سراسر کشور آسان\u200Cتر از همیشه است.</string>
     <string name="select_city">انتخاب شهر</string>
     <string name="search">جستجو</string>
-
+    <string name="grant_permission">فعال کردن دسترسی</string>
+    <string name="ok">باشه</string>
+    <string name="location_permission_title">دسترسی به موقعیت مکانی</string>
+    <string name="location_permission_rationale">برای انتخاب شهر شما، لطفاً دسترسی به موقعیت مکانی را فعال کنید.</string>
+    <string name="location_permission_permanently_declined">برای استفاده از این قابلیت، به تنظیمات بروید و دسترسی به موقعیت مکانی را فعال کنید.</string>
+    <string name="select_city_by_location">انتخاب شهر از روی موقعیت مکانی</string>
 </resources>

@@ -1,17 +1,12 @@
-package com.amirmousavi.post_presentation
+package com.amirmousavi.post_presentation.select_city_screen
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.amirmousavi.core.domain.model.CityEntity
 import com.amirmousavi.post_domain.usecase.GetCitiesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,40 +20,45 @@ class SelectCityViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
 
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery = _searchQuery.asStateFlow()
+    private val _permissionQueue = mutableStateListOf<String>()
 
-    private val _isSearching = MutableStateFlow(false)
-    val isSearching = _isSearching.asStateFlow()
-
-    private val _cities = MutableStateFlow<List<CityEntity>>(emptyList())
-
-    @OptIn(FlowPreview::class)
-    val cities = searchQuery
-        .debounce(300)
-        .combine(_cities) {query ,cityList ->
-            if (query.isBlank()){
-                cityList
-            } else {
-                cityList.filter { it.name.contains(query) }
-            }
-        }.stateIn(viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            _cities)
 
 
     fun onEvent(event: SelectCityContract.Event) {
         when (event) {
             is SelectCityContract.Event.GetCities -> getCities()
-
+            is SelectCityContract.Event.OnPermissionResult -> onPermissionResult(permission = event.permission , isGranted = event.isGranted)
+            SelectCityContract.Event.OnPermissionDialogDismiss -> onPermissionDialogDismiss()
         }
     }
 
-    @OptIn(FlowPreview::class)
+    private fun onPermissionDialogDismiss() {
+        _permissionQueue.removeFirst()
+        _state.update {
+            it.copy(
+                permissionDialogQueue = _permissionQueue
+            )
+        }
+    }
+
+    private fun onPermissionResult(
+        permission :String,
+        isGranted:Boolean
+    ) {
+        if (!isGranted && !_permissionQueue.contains(permission)) {
+            _permissionQueue.add(permission)
+            _state.update {
+                it.copy(
+                    permissionDialogQueue = _permissionQueue
+                )
+            }
+        }
+
+    }
+
     private fun getCities() {
         viewModelScope.launch {
             getCitiesUseCase.invoke()
-                .debounce(300)
                 .collect { citiesList ->
                     _state.update {
                         it.copy(cities = citiesList)
