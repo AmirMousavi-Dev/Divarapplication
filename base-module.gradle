@@ -37,14 +37,14 @@ dependencies {
 
     kapt libs.hilt.compiler
     implementation libs.hilt.android
+    implementation libs.hilt.ext.compiler
     implementation libs.androidx.datastore.preferences
+
 
     testImplementation libs.junit
 
     implementation libs.androidx.room.ktx
     implementation libs.androidx.room.runtime
     implementation libs.androidx.room.compiler
-
-
 
 }

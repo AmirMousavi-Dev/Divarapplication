@@ -12,6 +12,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -19,6 +20,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object CoreModule {
+
 
     @Singleton
     @Provides
@@ -37,13 +39,6 @@ object CoreModule {
     ): DivarDataStore =
         DivarDatastoreImpl(context)
 
-
-    @Provides
-    @Singleton
-    fun provideDataBase(
-        @ApplicationContext context: Context,
-    ): DivarDataStore =
-        DivarDatastoreImpl(context)
 
     @Provides
     @Singleton

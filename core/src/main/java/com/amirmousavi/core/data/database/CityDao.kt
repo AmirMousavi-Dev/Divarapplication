@@ -6,12 +6,17 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.amirmousavi.core.domain.model.CityEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CityDao {
 
-    @Query("SELECT * FROM tb_cities ORDER BY id ASC")
-    fun getAllItems(): PagingSource<Int, CityEntity>
+    @Query("""
+        SELECT * 
+        FROM tb_cities
+        ORDER BY id ASC;
+    """)
+    fun getAllCities(): Flow<List<CityEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<CityEntity>)

@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -60,5 +61,14 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
 
 
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
+//    ksp(libs.hilt.ext.compiler)
+
+
+
     implementation(project(":design_system"))
+    implementation(project(":post:post_domain"))
+    implementation(project(":core"))
 }

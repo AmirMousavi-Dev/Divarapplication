@@ -8,5 +8,6 @@
     <string name="explore_city_title">آگهی‌ها در همه شهرها!</string>
     <string name="explore_city_message">با دیوار، دسترسی به آگهی\u200Cها در سراسر کشور آسان\u200Cتر از همیشه است.</string>
     <string name="select_city">انتخاب شهر</string>
+    <string name="search">جستجو</string>
 
 </resources>
