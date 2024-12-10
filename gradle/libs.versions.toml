@@ -1,12 +1,13 @@
 [versions]
 gson = "2.10.1"
+pagingRuntimeKtx = "3.3.4"
 projectVersionName = "1.0.0"
 projectMinSdkVersion = "24"
 projectTargetSdkVersion = "35"
 projectCompileSdkVersion = "35"
 projectVersionCode = "1"
 agp = "8.7.0"
-kotlin = "2.0.0"
+kotlin = "2.0.20"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -16,21 +17,24 @@ activityCompose = "1.9.3"
 composeBom = "2024.04.01"
 appcompat = "1.7.0"
 material = "1.12.0"
-hilt = "2.51"
+hilt = "2.51.1"
 androidHiltCompiler = "1.2.0"
 hiltNavigationCompose = "1.2.0"
 datastorePreferences = "1.0.0"
 desugar = "2.0.4"
 retrofit = "2.9.0"
 room = "2.6.1"
-ksp = "1.9.23-1.0.19"
+ksp = "2.0.21-1.0.27"
 jetbrainsKotlinJvm = "2.0.0"
 coil = "2.7.0"
 kotlinCompilerExtensionVersion = "1.5.1"
+playServicesLocation = "21.3.0"
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntimeKtx" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -59,6 +63,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 squareup-retrofit = { group = "com.squareup.retrofit2",name = "retrofit", version.ref = "retrofit" }
 squareup-converter-gson = { group = "com.squareup.retrofit2",name = "converter-gson", version.ref = "retrofit" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
