@@ -18,11 +18,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,6 +39,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.amirmousavi.core.domain.model.CityEntity
 import com.amirmousavi.design_system.LocalSpacing
 import com.amirmousavi.design_system.R
+import com.amirmousavi.design_system.UiEvent
 import com.amirmousavi.design_system.components.LocationPermissionTextProvider
 import com.amirmousavi.design_system.components.PermissionDialog
 import com.amirmousavi.design_system.components.PrimaryButton
@@ -47,11 +53,16 @@ import com.google.android.gms.tasks.CancellationTokenSource
 fun SelectCityScreen(
     modifier: Modifier = Modifier,
     viewModel: SelectCityViewModel = hiltViewModel(),
+    onNavigate :() -> Unit
 ) {
     val state by viewModel.state.collectAsState()
+    val uiEvent = viewModel.uiEvent
 
     val spacing = LocalSpacing.current
     val activity = LocalContext.current.findActivity()
+    var shouldShowSuccessDialog by remember {
+        mutableStateOf(false)
+    }
 
     val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
 
@@ -74,11 +85,16 @@ fun SelectCityScreen(
                     fusedLocationProviderClient = fusedLocationProviderClient,
                     activity = activity,
                     onGetCurrentLocationSuccess = {latitude,longitude->
-                        Toast.makeText(activity.baseContext, "$latitude , $longitude", Toast.LENGTH_SHORT).show()
+                        viewModel.onEvent(
+                            SelectCityContract.Event.SaveCityByLocation(
+                                latitude = latitude ,
+                                longitude = longitude
+                            )
+                        )
 
                     },
                     onGetCurrentLocationFailed = {
-                        Toast.makeText(activity.baseContext, "fa", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity.baseContext, it.message, Toast.LENGTH_SHORT).show()
                     }
                 )
             }
@@ -112,10 +128,50 @@ fun SelectCityScreen(
         }
 
 
+    if (shouldShowSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                shouldShowSuccessDialog = false
+                onNavigate()
+            },
+            title = {
+                Text(stringResource(R.string.select_city))
+            },
+            text = {
+                Text(stringResource(R.string.your_city_successfully_changed))
+            },
+            confirmButton = {
+                PrimaryButton(
+                    text = stringResource(R.string.ok),
+                    modifier= Modifier.fillMaxWidth()
+                        .padding(spacing.spaceMedium),
+                    onClick = {
+                        shouldShowSuccessDialog = false
+                        onNavigate()
+                    }
+
+                )
+            }
+        )
+    }
+
+
+    LaunchedEffect(uiEvent) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.Success -> shouldShowSuccessDialog = true
+                is UiEvent.ShowMessage -> {
+                    Toast.makeText(activity.applicationContext, event.message.asString(activity.applicationContext), Toast.LENGTH_SHORT).show()
+                }
+
+            }
+
+        }
+    }
 
         SelectCityContent(
             state = state,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(spacing.spaceSmall),
             onSelectCityClick = {
@@ -124,11 +180,16 @@ fun SelectCityScreen(
                     fusedLocationProviderClient = fusedLocationProviderClient,
                     activity = activity,
                     onGetCurrentLocationSuccess = {latitude,longitude->
-                        Toast.makeText(activity.baseContext, "$latitude , $longitude", Toast.LENGTH_SHORT).show()
+                        viewModel.onEvent(
+                            SelectCityContract.Event.SaveCityByLocation(
+                                latitude = latitude ,
+                                longitude = longitude
+                            )
+                        )
 
                     },
                     onGetCurrentLocationFailed = {
-                        Toast.makeText(activity.baseContext, "fa", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity.baseContext, it.message, Toast.LENGTH_SHORT).show()
                     },
                     requestPermission = {
                         locationPermissionResultLauncher.launch(
@@ -137,6 +198,12 @@ fun SelectCityScreen(
                     }
                 )
 
+            },
+            onCityClick = {city->
+                viewModel.onEvent(SelectCityContract.Event.OnCitySelected(
+                    cityId = city.id,
+                    cityFaName = city.name
+                ))
             }
         )
 
@@ -148,7 +215,8 @@ fun SelectCityScreen(
 fun SelectCityContent(
     state: SelectCityContract.State,
     modifier: Modifier = Modifier,
-    onSelectCityClick :() -> Unit
+    onSelectCityClick :() -> Unit,
+    onCityClick :(CityEntity) -> Unit
 ) {
     val spacing = LocalSpacing.current
 
@@ -181,7 +249,7 @@ fun SelectCityContent(
                         .fillMaxWidth()
 
                 )
-                {}
+                {onCityClick(city)}
             }
         }
     }
@@ -255,6 +323,8 @@ private fun SelectCityScreenPreview() {
                 CityEntity(3, "Mashhad"),
                 CityEntity(4, "Tabriz"),
             )
-        )
-    ) {}
+        ),
+        onSelectCityClick = {},
+        onCityClick = {}
+    )
 }

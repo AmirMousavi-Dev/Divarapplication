@@ -1,7 +1,8 @@
 package com.amirmousavi.design_system
 
+import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 
 sealed class UiText {
 
@@ -13,7 +14,14 @@ sealed class UiText {
     fun asString(): String {
         return when (this) {
             is DynamicString -> text
-            is StringResource -> LocalContext.current.getString(resId)
+            is StringResource -> stringResource(resId)
+        }
+    }
+
+    fun asString(context: Context): String {
+        return when (this) {
+            is DynamicString -> text
+            is StringResource -> context.getString(resId)
         }
     }
 
