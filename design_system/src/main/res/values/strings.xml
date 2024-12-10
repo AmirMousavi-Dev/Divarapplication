@@ -15,4 +15,9 @@
     <string name="location_permission_rationale">برای انتخاب شهر شما، لطفاً دسترسی به موقعیت مکانی را فعال کنید.</string>
     <string name="location_permission_permanently_declined">برای استفاده از این قابلیت، به تنظیمات بروید و دسترسی به موقعیت مکانی را فعال کنید.</string>
     <string name="select_city_by_location">انتخاب شهر از روی موقعیت مکانی</string>
+
+    <string name="request_timeout">اتصال به سرور زمان‌بر شد، لطفاً دوباره تلاش کنید.</string>
+    <string name="authentication_error">خطا در احراز هویت، لطفاً دوباره وارد شوید.</string>
+    <string name="network_disabled">اتصال به اینترنت برقرار نیست، لطفاً وضعیت شبکه را بررسی کنید.</string>
+    <string name="unknown_error">یک خطای ناشناخته رخ داده است، لطفاً دوباره تلاش کنید.</string>
 </resources>
