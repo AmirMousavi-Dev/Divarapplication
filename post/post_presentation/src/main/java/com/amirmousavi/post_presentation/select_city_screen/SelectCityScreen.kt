@@ -1,10 +1,13 @@
 package com.amirmousavi.post_presentation.select_city_screen
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -25,15 +28,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.amirmousavi.core.domain.model.CityEntity
 import com.amirmousavi.design_system.LocalSpacing
+import com.amirmousavi.design_system.R
 import com.amirmousavi.design_system.components.LocationPermissionTextProvider
 import com.amirmousavi.design_system.components.PermissionDialog
 import com.amirmousavi.design_system.components.PrimaryButton
-import com.amirmousavi.design_system.R
 import com.amirmousavi.post_presentation.select_city_screen.component.CityItem
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 
 @Composable
 fun SelectCityScreen(
@@ -43,8 +51,10 @@ fun SelectCityScreen(
     val state by viewModel.state.collectAsState()
 
     val spacing = LocalSpacing.current
-
     val activity = LocalContext.current.findActivity()
+
+    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
+
 
     LaunchedEffect(true) {
         viewModel.onEvent(SelectCityContract.Event.GetCities)
@@ -58,6 +68,20 @@ fun SelectCityScreen(
                     isGranted ,
                     Manifest.permission.ACCESS_FINE_LOCATION)
             )
+
+            if(isGranted) {
+                getCurrentLocation(
+                    fusedLocationProviderClient = fusedLocationProviderClient,
+                    activity = activity,
+                    onGetCurrentLocationSuccess = {latitude,longitude->
+                        Toast.makeText(activity.baseContext, "$latitude , $longitude", Toast.LENGTH_SHORT).show()
+
+                    },
+                    onGetCurrentLocationFailed = {
+                        Toast.makeText(activity.baseContext, "fa", Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
         }
     )
 
@@ -95,9 +119,24 @@ fun SelectCityScreen(
                 .fillMaxWidth()
                 .padding(spacing.spaceSmall),
             onSelectCityClick = {
-                locationPermissionResultLauncher.launch(
-                    Manifest.permission.ACCESS_FINE_LOCATION
+
+                getCurrentLocation(
+                    fusedLocationProviderClient = fusedLocationProviderClient,
+                    activity = activity,
+                    onGetCurrentLocationSuccess = {latitude,longitude->
+                        Toast.makeText(activity.baseContext, "$latitude , $longitude", Toast.LENGTH_SHORT).show()
+
+                    },
+                    onGetCurrentLocationFailed = {
+                        Toast.makeText(activity.baseContext, "fa", Toast.LENGTH_SHORT).show()
+                    },
+                    requestPermission = {
+                        locationPermissionResultLauncher.launch(
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                    }
                 )
+
             }
         )
 
@@ -150,6 +189,42 @@ fun SelectCityContent(
 
 }
 
+
+
+@SuppressLint("MissingPermission")
+private fun getCurrentLocation(
+    fusedLocationProviderClient: FusedLocationProviderClient,
+    activity: Activity,
+    onGetCurrentLocationSuccess: (latitude :Double,longitude: Double) -> Unit,
+    onGetCurrentLocationFailed: (Exception) -> Unit,
+    requestPermission: () ->Unit = {},
+) {
+    if (areLocationPermissionsGranted(activity)) {
+        fusedLocationProviderClient.getCurrentLocation(
+            Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token,
+        ).addOnSuccessListener { location ->
+            location?.let {
+                onGetCurrentLocationSuccess(it.latitude, it.longitude)
+            }
+        }.addOnFailureListener { exception ->
+            onGetCurrentLocationFailed(exception)
+            exception.printStackTrace()
+        }
+    } else {
+        requestPermission()
+    }
+}
+
+private fun areLocationPermissionsGranted(
+    activity: Activity
+): Boolean {
+    return (ActivityCompat.checkSelfPermission(
+        activity.applicationContext, Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                activity.applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED)
+}
 
 fun android.content.Context.findActivity(): androidx.activity.ComponentActivity {
     var context = this
