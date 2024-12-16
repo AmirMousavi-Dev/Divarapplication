@@ -1,4 +1,4 @@
-package com.amirmousavi.post_data.remote
+package com.amirmousavi.post_data.remote.dto
 
 
 import com.google.gson.annotations.SerializedName
