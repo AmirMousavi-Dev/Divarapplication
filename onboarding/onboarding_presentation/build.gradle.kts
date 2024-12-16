@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
+
 
 }
 
@@ -58,5 +60,10 @@ dependencies {
 
     coreLibraryDesugaring (libs.desugar.jdk)
 
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+
     implementation(project(":design_system"))
+    implementation(project(":core"))
 }

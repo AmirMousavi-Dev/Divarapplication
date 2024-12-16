@@ -16,12 +16,15 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.compose.rememberNavController
+import com.amirmousavi.core.domain.datastore.DivarDataStore
 import com.amirmousavi.divarapplication.navigation.DivarNavigation
 import com.amirmousavi.divarapplication.ui.theme.DivarApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject lateinit var dataStore: DivarDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
@@ -38,7 +41,8 @@ class MainActivity : ComponentActivity() {
                             navController = nacController,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(innerPadding)
+                                .padding(innerPadding),
+                            shouldShowOnboarding = dataStore.getShouldShowOnboarding()
                         )
                     }
                 }

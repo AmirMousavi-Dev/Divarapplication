@@ -14,10 +14,11 @@ import com.amirmousavi.post_presentation.select_city_screen.SelectCityScreen
 fun DivarNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController,
+    shouldShowOnboarding: Boolean
 ) {
     NavHost(
         navController = navController,
-        startDestination = WelcomeRoute
+        startDestination = if (shouldShowOnboarding) WelcomeRoute else PostListRoute
     ) {
         composable<WelcomeRoute> {
             WelcomeScreen(

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.amirmousavi.design_system.LocalSpacing
 import com.amirmousavi.design_system.R
 import com.amirmousavi.design_system.components.PrimaryButton
@@ -28,6 +29,7 @@ import com.amirmousavi.design_system.components.PrimaryButton
 @Composable
 fun ExploreCitiesScreen(
     modifier: Modifier = Modifier,
+    viewModel: ExploreCitiesViewModel = hiltViewModel(),
     onSelectCityClick: () -> Unit
 ) {
 
@@ -64,7 +66,10 @@ fun ExploreCitiesScreen(
         PrimaryButton(
             text = stringResource(R.string.select_city),
             modifier = Modifier.fillMaxWidth(),
-            onClick = onSelectCityClick
+            onClick = {
+                viewModel.shouldShowOnboarding(false)
+                onSelectCityClick()
+            }
         )
 
 
