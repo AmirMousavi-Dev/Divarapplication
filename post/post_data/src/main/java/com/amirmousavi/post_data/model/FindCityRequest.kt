@@ -1,10 +1,10 @@
-package com.amirmousavi.post_data.remote
+package com.amirmousavi.post_data.model
 
 import com.google.gson.annotations.SerializedName
 
 data class FindCityRequest(
     @SerializedName("lat")
-    val latitude :Double,
+    val latitude: Double,
     @SerializedName("long")
-    val longitude :Double
+    val longitude: Double
 )
