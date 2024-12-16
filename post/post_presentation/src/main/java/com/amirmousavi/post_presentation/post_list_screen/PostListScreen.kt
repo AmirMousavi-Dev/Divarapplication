@@ -30,6 +30,7 @@ import kotlinx.coroutines.delay
 fun PostListScreen(
     modifier: Modifier = Modifier,
     viewModel: PostListViewModel = hiltViewModel(),
+    onPostClick: (token: String) -> Unit
 ) {
 
     LaunchedEffect(true) {
@@ -77,7 +78,7 @@ fun PostListScreen(
                     item.second.Render(
                         postEntity = item.first,
                         modifier = Modifier, onClick = {
-                            Toast.makeText(context, it.first.token, Toast.LENGTH_SHORT).show()
+                            it.first.token?.let(onPostClick)
                         }
                     )
                 }

@@ -3,8 +3,10 @@ package com.amirmousavi.divarapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,22 +15,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.navigation.compose.rememberNavController
+import com.amirmousavi.core.domain.datastore.DivarDataStore
+import com.amirmousavi.divarapplication.navigation.DivarNavigation
 import com.amirmousavi.divarapplication.ui.theme.DivarApplicationTheme
-import com.amirmousavi.post_presentation.select_city_screen.SelectCityScreen
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject lateinit var dataStore: DivarDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         setContent {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                val nacController = rememberNavController()
                 DivarApplicationTheme {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        SelectCityScreen(modifier = Modifier.padding(innerPadding)) {
-
-                        }
+                    Scaffold(
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.background)
+                            .fillMaxSize()
+                    ) { innerPadding ->
+                        DivarNavigation(
+                            navController = nacController,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding),
+                            shouldShowOnboarding = dataStore.getShouldShowOnboarding()
+                        )
                     }
                 }
             }

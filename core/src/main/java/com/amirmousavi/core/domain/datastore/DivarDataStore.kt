@@ -9,4 +9,8 @@ interface DivarDataStore {
     suspend fun saveCityFaName(name: String)
     suspend fun getCityFaName(): String?
 
+
+    suspend fun saveShouldShowOnboarding(value: Boolean)
+    fun getShouldShowOnboarding(): Boolean
+
 }
