@@ -44,14 +44,14 @@ class DivarDatastoreImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCityId(): Int? {
+    override suspend fun getCityId(): Int {
         return try {
             val cityIdPreferencesKey = intPreferencesKey(CITY_ID_KEY)
             val preferences = context.dataStore.data.first()
-            return preferences[cityIdPreferencesKey]
+            return preferences[cityIdPreferencesKey] ?:1
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            1
         }
     }
 

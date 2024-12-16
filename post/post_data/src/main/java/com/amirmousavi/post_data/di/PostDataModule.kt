@@ -1,9 +1,14 @@
 package com.amirmousavi.post_data.di
 
 import com.amirmousavi.core.data.database.CityDao
+import com.amirmousavi.core.data.database.DivarDatabase
+import com.amirmousavi.core.data.database.PostDao
 import com.amirmousavi.post_data.remote.CityApiService
+import com.amirmousavi.post_data.remote.PostApiService
 import com.amirmousavi.post_data.repository.CityRepositoryImpl
+import com.amirmousavi.post_data.repository.PostRepositoryImpl
 import com.amirmousavi.post_domain.repository.CityRepository
+import com.amirmousavi.post_domain.repository.PostRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,23 +20,43 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object PostDataModule {
 
-    @Singleton
-    @Provides
-    fun provideCityRepository(
-        dao: CityDao,
-        apiService: CityApiService
-    ): CityRepository =
-        CityRepositoryImpl(
-            dao = dao,
-            apiService = apiService
-        )
-
 
     @Singleton
     @Provides
     fun provideCityApiService(
         retrofit: Retrofit
     ): CityApiService = retrofit.create(CityApiService::class.java)
+
+
+    @Singleton
+    @Provides
+    fun provideCityRepository(
+        dao: CityDao,
+        apiService: CityApiService
+    ): CityRepository = CityRepositoryImpl(
+        dao = dao,
+        apiService = apiService
+    )
+
+
+    @Singleton
+    @Provides
+    fun providePostApiService(
+        retrofit: Retrofit
+    ): PostApiService = retrofit.create(PostApiService::class.java)
+
+
+    @Singleton
+    @Provides
+    fun providePostRepository(
+        database: DivarDatabase,
+        dao: PostDao,
+        apiService: PostApiService
+    ): PostRepository = PostRepositoryImpl(
+        dao = dao,
+        apiService = apiService,
+        database = database
+    )
 
 
 }

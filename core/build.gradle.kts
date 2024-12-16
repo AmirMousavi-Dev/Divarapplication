@@ -42,6 +42,7 @@ dependencies {
 
     implementation(libs.gson)
     implementation(libs.squareup.retrofit)
+    implementation(libs.logging.interceptor)
     implementation(libs.squareup.converter.gson)
     implementation(libs.androidx.paging.runtime.ktx)
 
@@ -56,6 +57,7 @@ dependencies {
     //Room
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
+    implementation (libs.androidx.room.paging)
     ksp(libs.androidx.room.compiler)
 
    implementation(libs.androidx.datastore.preferences)

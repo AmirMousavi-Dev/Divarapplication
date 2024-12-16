@@ -7,15 +7,15 @@ import com.amirmousavi.core.util.DataError
 import com.amirmousavi.core.util.Result
 import com.amirmousavi.post_data.mapper.asCityEntity
 import com.amirmousavi.post_data.mapper.asListOfCityEntity
+import com.amirmousavi.post_data.model.FindCityRequest
 import com.amirmousavi.post_data.remote.CityApiService
-import com.amirmousavi.post_data.remote.FindCityRequest
 import com.amirmousavi.post_domain.repository.CityRepository
 import kotlinx.coroutines.flow.Flow
 
 class CityRepositoryImpl(
     private val dao: CityDao,
     private val apiService: CityApiService
-) : CityRepository,BaseApiResponse() {
+) : CityRepository, BaseApiResponse() {
 
 
     override suspend fun syncCities() {
@@ -36,11 +36,15 @@ class CityRepositoryImpl(
     override fun getCities(): Flow<List<CityEntity>> = dao.getAllCities()
 
 
-    override suspend fun findCity(latitude: Double, longitude: Double): Result<CityEntity,DataError> = safeApiCall {
+    override suspend fun findCity(
+        latitude: Double,
+        longitude: Double
+    ): Result<CityEntity, DataError> = safeApiCall {
         apiService.findCity(
             findCityRequest = FindCityRequest(
-                latitude = latitude ,
-                longitude = longitude)
+                latitude = latitude,
+                longitude = longitude
+            )
         ).asCityEntity()
     }
 
