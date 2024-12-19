@@ -63,12 +63,15 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.coil.compose)
 
-//    implementation(libs.accompanist.swiperefresh)
-
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 //    ksp(libs.hilt.ext.compiler)
+
+
+    // Paging compose
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
 
 
 

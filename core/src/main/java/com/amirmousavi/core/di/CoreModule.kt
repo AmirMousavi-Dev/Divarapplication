@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.amirmousavi.core.data.database.CityDao
 import com.amirmousavi.core.data.database.DivarDatabase
 import com.amirmousavi.core.data.database.PostDao
+import com.amirmousavi.core.data.database.PostViewDao
 import com.amirmousavi.core.data.datastore.DivarDatastoreImpl
 import com.amirmousavi.core.domain.datastore.DivarDataStore
 import com.amirmousavi.core.util.Constants.BASE_URL
@@ -81,16 +82,26 @@ object CoreModule {
 
 
     @Provides
+    @Singleton
     fun provideCityDao(
         database: DivarDatabase
     ): CityDao =
         database.cityDao()
 
     @Provides
+    @Singleton
     fun providePostDao(
         database: DivarDatabase
     ): PostDao =
         database.postDao()
+
+
+    @Provides
+    @Singleton
+    fun providePostViewDao(
+        database: DivarDatabase
+    ): PostViewDao =
+        database.postViewDao()
 
 
 }
