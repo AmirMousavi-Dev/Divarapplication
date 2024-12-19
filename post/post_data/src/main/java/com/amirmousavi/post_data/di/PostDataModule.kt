@@ -4,6 +4,7 @@ import com.amirmousavi.core.data.database.CityDao
 import com.amirmousavi.core.data.database.DivarDatabase
 import com.amirmousavi.core.data.database.PostDao
 import com.amirmousavi.core.data.database.PostViewDao
+import com.amirmousavi.core.domain.datastore.DivarDataStore
 import com.amirmousavi.post_data.remote.CityApiService
 import com.amirmousavi.post_data.remote.PostApiService
 import com.amirmousavi.post_data.repository.CityRepositoryImpl
@@ -52,6 +53,7 @@ object PostDataModule {
     @Provides
     fun providePostRepository(
         database: DivarDatabase,
+        dataStore: DivarDataStore,
         postDao: PostDao,
         postViewDao: PostViewDao,
         apiService: PostApiService,
@@ -61,6 +63,7 @@ object PostDataModule {
         postDetailDao = postViewDao,
         apiService = apiService,
         database = database,
+        dataStore = dataStore,
         gson = gson
     )
 

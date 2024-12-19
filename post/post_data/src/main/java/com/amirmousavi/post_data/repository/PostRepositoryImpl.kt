@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import com.amirmousavi.core.data.database.DivarDatabase
 import com.amirmousavi.core.data.database.PostDao
 import com.amirmousavi.core.data.database.PostViewDao
+import com.amirmousavi.core.domain.datastore.DivarDataStore
 import com.amirmousavi.core.domain.model.PostEntity
 import com.amirmousavi.core.util.BaseApiResponse
 import com.amirmousavi.post_data.mapper.asPostDetailEntity
@@ -24,6 +25,7 @@ class PostRepositoryImpl(
     private val postDetailDao: PostViewDao,
     private val apiService: PostApiService,
     private val database: DivarDatabase,
+    private val dataStore: DivarDataStore,
     private val gson: Gson,
 ) : PostRepository, BaseApiResponse() {
 
@@ -33,9 +35,10 @@ class PostRepositoryImpl(
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
-                enablePlaceholders = false
+                enablePlaceholders = false,
+                initialLoadSize = 10
             ),
-            remoteMediator = PostMediator(apiService, database),
+            remoteMediator = PostMediator(apiService, database, dataStore),
             pagingSourceFactory = {
                 postDao.getAllPosts()
             }

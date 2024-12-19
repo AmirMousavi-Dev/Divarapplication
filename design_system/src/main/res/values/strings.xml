@@ -21,4 +21,6 @@
     <string name="authentication_error">خطا در احراز هویت، لطفاً دوباره وارد شوید.</string>
     <string name="network_disabled">اتصال به اینترنت برقرار نیست، لطفاً وضعیت شبکه را بررسی کنید.</string>
     <string name="unknown_error">یک خطای ناشناخته رخ داده است، لطفاً دوباره تلاش کنید.</string>
+
+    <string name="retry">تلاش مجدد</string>
 </resources>

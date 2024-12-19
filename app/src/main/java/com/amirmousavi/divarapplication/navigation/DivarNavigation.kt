@@ -61,6 +61,9 @@ fun DivarNavigation(
                     navController.navigate(PostDetailRoute(token
 
                     ))
+                },
+                onSelectCityClick = {
+                    navController.navigate(SelectCityRoute)
                 }
             )
         }
