@@ -22,6 +22,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.amirmousavi.design_system.LocalSpacing
+import com.amirmousavi.post_presentation.util.asWidgetEntity
 import kotlinx.coroutines.delay
 
 
@@ -76,7 +77,7 @@ fun PostListScreen(
             items(state) { item ->
                 item?.let {
                     item.second.Render(
-                        postEntity = item.first,
+                        widgetUiModel = item.first.asWidgetEntity(),
                         modifier = Modifier, onClick = {
                             it.first.token?.let(onPostClick)
                         }

@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.amirmousavi.core.domain.model.PostEntity
 import com.amirmousavi.design_system.LocalSpacing
+import com.amirmousavi.post_presentation.model.WidgetUiModel
 import com.amirmousavi.post_presentation.util.Widget
 
 class SubTitleRowWidget(
@@ -18,8 +18,8 @@ class SubTitleRowWidget(
 
 
     @Composable
-    override fun Render(postEntity: PostEntity, modifier: Modifier, onClick: () -> Unit) {
-        postEntity.text?.let {
+    override fun Render(widgetUiModel: WidgetUiModel, modifier: Modifier, onClick: () -> Unit) {
+        widgetUiModel.text?.let {
             SubTitleRow(it, modifier)
         }
     }
