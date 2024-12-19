@@ -2,6 +2,8 @@ package com.amirmousavi.post_data.remote
 
 import com.amirmousavi.post_data.model.GetCityByIdRequest
 import com.amirmousavi.post_data.remote.dto.PostListDTO
+import com.amirmousavi.post_data.remote.dto.PostViewDTO
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -20,5 +22,5 @@ interface PostApiService {
     @GET("api/v1/post/view/{token}")
     suspend fun getPostByToken(
         @Path("token") token: String,
-    ): PostListDTO
+    ): Response<PostViewDTO>
 }

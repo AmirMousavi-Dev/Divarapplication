@@ -9,34 +9,43 @@ data class PostViewDTO(
     @SerializedName("enable_contact")
     val enableContact: Boolean,
     @SerializedName("widgets")
-    val widgets: List<Widget>
+    val widgets: List<Widget>? = null
 ) {
     data class Widget(
         @SerializedName("data")
-        val widgetDataDTO: WidgetDataDTO,
+        val widgetDataDTO: WidgetDataDTO? = null,
         @SerializedName("widget_type")
-        val widgetType: String
+        val widgetType: String? = null
     ) {
         data class WidgetDataDTO(
             @SerializedName("image_url")
-            val imageUrl: String,
+            val imageUrl: String? = null,
             @SerializedName("items")
-            val items: List<Item>,
+            val items: List<Item>? = null,
             @SerializedName("show_thumbnail")
-            val showThumbnail: Boolean,
+            val showThumbnail: Boolean? = null,
             @SerializedName("subtitle")
-            val subtitle: String,
+            val subtitle: String? = null,
             @SerializedName("text")
-            val text: String,
+            val text: String? = null,
             @SerializedName("title")
-            val title: String,
+            val title: String? = null,
             @SerializedName("value")
-            val value: String
+            val value: String? = null,
         ) {
             data class Item(
-                @SerializedName("image_url")
-                val imageUrl: String
-            )
+                @SerializedName("image")
+                val image: Image? = null,
+            ) {
+                data class Image(
+                    @SerializedName("url")
+                    val imageUrl: String? = null,
+                    @SerializedName("alt")
+                    val alt: String? = null,
+                    @SerializedName("thumbnail_url")
+                    val thumbnailUrl: String? = null,
+                )
+            }
         }
     }
 }
