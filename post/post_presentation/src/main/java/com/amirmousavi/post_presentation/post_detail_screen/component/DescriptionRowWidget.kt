@@ -1,34 +1,38 @@
-package com.amirmousavi.post_presentation.post_list_screen.component
+package com.amirmousavi.post_presentation.post_detail_screen.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.amirmousavi.design_system.LocalSpacing
 import com.amirmousavi.post_presentation.model.WidgetUiModel
 import com.amirmousavi.post_presentation.util.Widget
 
-class SubTitleRowWidget(
-) : Widget {
 
+class DescriptionRowWidget(
+) : Widget {
 
     @Composable
     override fun Render(widgetUiModel: WidgetUiModel, modifier: Modifier, onClick: () -> Unit) {
+
         widgetUiModel.text?.let {
-            SubTitleRow(it, modifier)
+            DescriptionRow(
+                description = widgetUiModel.text,
+                modifier = modifier
+            )
         }
     }
 }
 
 
 @Composable
-private fun SubTitleRow(
-    text: String,
+fun DescriptionRow(
+    description: String,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
@@ -37,18 +41,23 @@ private fun SubTitleRow(
         verticalArrangement = Arrangement.spacedBy(spacing.spaceSmall)
     ) {
         Text(
-            text = text,
-            style = MaterialTheme.typography.titleSmall,
-            textAlign = TextAlign.Start,
+            text = description,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface,
         )
+
         HorizontalDivider()
     }
+
+
 }
+
 
 @Preview
 @Composable
-private fun SubTitleRowPreview() {
-    SubTitleRow(
-        text = "آخرین آگهی های موجود در شهر تهران"
+private fun DescriptionRowPreview() {
+    DescriptionRow(
+        description = "مودم با طرح یکساله400گیگ\nجشنواره مبین نت با با قیمت باورنکردنی\nسرعت 4الی40مگ\nبدون نیاز به خط تلفن\nقابلیت گرفتن ip استاتیک\nقابل حمل بدون نیاز به خط تلفن\nبا طرح های \nسه ماهه\nشش ماهه\nیکساله\nارسال به سراسر کشور",
+        modifier = Modifier.fillMaxWidth()
     )
 }

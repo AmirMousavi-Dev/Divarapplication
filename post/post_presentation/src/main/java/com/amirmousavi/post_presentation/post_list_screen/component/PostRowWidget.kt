@@ -26,10 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.amirmousavi.core.domain.model.PostEntity
 import com.amirmousavi.design_system.LocalSpacing
 import com.amirmousavi.design_system.R
 import com.amirmousavi.post_presentation.model.PostRowUiModel
+import com.amirmousavi.post_presentation.model.WidgetUiModel
 import com.amirmousavi.post_presentation.util.Widget
 import com.amirmousavi.post_presentation.util.asPostRowUiModel
 
@@ -37,7 +37,7 @@ class PostRowWidget(
 ) : Widget {
 
     @Composable
-    override fun Render(postEntity: PostEntity, modifier: Modifier, onClick: () -> Unit) {
+    override fun Render(widgetUiModel: WidgetUiModel, modifier: Modifier, onClick: () -> Unit) {
         val spacing = LocalSpacing.current
 
         ElevatedCard(
@@ -50,7 +50,7 @@ class PostRowWidget(
                 )
         ) {
             PostRow(
-                postEntity.asPostRowUiModel(), modifier = Modifier
+                widgetUiModel.asPostRowUiModel(), modifier = Modifier
                     .fillMaxWidth()
                     .height(152.dp)
                     .padding(spacing.spaceSmall)

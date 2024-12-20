@@ -16,3 +16,9 @@ object PostListRoute
 @Serializable
 object SelectCityRoute
 
+
+@Serializable
+data class PostDetailRoute(
+    val token :String
+)
+

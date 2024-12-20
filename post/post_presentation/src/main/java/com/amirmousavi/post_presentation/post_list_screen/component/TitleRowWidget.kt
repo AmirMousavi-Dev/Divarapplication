@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.amirmousavi.core.domain.model.PostEntity
+import com.amirmousavi.post_presentation.model.WidgetUiModel
 import com.amirmousavi.post_presentation.util.Widget
 
 class TitleRowWidget(
@@ -15,9 +15,9 @@ class TitleRowWidget(
 
     @Composable
     override fun Render(
-        postEntity: PostEntity, modifier: Modifier, onClick: () -> Unit
+        widgetUiModel: WidgetUiModel, modifier: Modifier, onClick: () -> Unit
     ) {
-        postEntity.text?.let {
+        widgetUiModel.text?.let {
             TitleRow(it, modifier)
 
         }
@@ -32,7 +32,7 @@ private fun TitleRow(
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.headlineMedium,
+        style = MaterialTheme.typography.titleLarge,
         textAlign = TextAlign.Start,
         modifier = modifier
     )
