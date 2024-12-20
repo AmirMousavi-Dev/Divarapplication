@@ -1,12 +1,17 @@
 package com.amirmousavi.post_data.di
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.amirmousavi.core.data.database.CityDao
 import com.amirmousavi.core.data.database.DivarDatabase
 import com.amirmousavi.core.data.database.PostDao
 import com.amirmousavi.core.data.database.PostViewDao
 import com.amirmousavi.core.domain.datastore.DivarDataStore
+import com.amirmousavi.core.domain.model.PostEntity
 import com.amirmousavi.post_data.remote.CityApiService
 import com.amirmousavi.post_data.remote.PostApiService
+import com.amirmousavi.post_data.remote.PostMediator
 import com.amirmousavi.post_data.repository.CityRepositoryImpl
 import com.amirmousavi.post_data.repository.PostRepositoryImpl
 import com.amirmousavi.post_domain.repository.CityRepository
@@ -71,5 +76,27 @@ object PostDataModule {
     @Provides
     fun provideGson() :Gson = Gson()
 
+
+    @OptIn(ExperimentalPagingApi::class)
+    @Provides
+    @Singleton
+    fun provideBeerPager(
+        database: DivarDatabase,
+        dataStore: DivarDataStore,
+        postApiService: PostApiService,
+    ): Pager<Int, PostEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            remoteMediator = PostMediator(
+                dataStore = dataStore,
+                database = database,
+                apiService = postApiService,
+
+            ),
+            pagingSourceFactory = {
+                database.postDao().getAllPosts()
+            }
+        )
+    }
 }
 

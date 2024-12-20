@@ -51,7 +51,7 @@ class PostMediator @Inject constructor(
                 if (loadType == LoadType.REFRESH) {
                     database.postDao().clearAll()
                 }
-                database.postDao().insertAll(response.asListOfPostEntity().take(10))
+                database.postDao().insertAll(response.asListOfPostEntity().take(20))
             }
 
             MediatorResult.Success(endOfPaginationReached = response.postWidgetDTOList.isEmpty())
